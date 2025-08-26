@@ -1,0 +1,135 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // 1. GCC 32位配置
+        {
+            "name": "GCC-32 - 启动调试",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/gcc-32/bin/vscode-config-template.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                // 32位环境变量（若需要）
+                {
+                    "name": "ARCH",
+                    "value": "x86"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "c:/dev_tools/msys64/mingw32/bin/gdb.exe", // 32位GDB（通常在mingw32/bin下）
+            "setupCommands": [
+                {
+                    "description": "启用GDB整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "设置Intel反汇编风格",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "忽略32位MinGW系统库断点",
+                    "text": "-interpreter-exec console \"skip -gfi ${env:MINGW32_PREFIX}/include/*\"",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "GCC-32 - 构建项目",
+            "logging": {
+                "moduleLoad": false,
+                "trace": false,
+                "traceFile": "${workspaceFolder}/build/gcc-32/gdb.log"
+            }
+        },
+        // 2. GCC 64位配置
+        {
+            "name": "GCC-64 - 启动调试",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/gcc-64/bin/vscode-config-template.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                // 64位环境变量（若需要）
+                {
+                    "name": "ARCH",
+                    "value": "x64"
+                }
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "c:/dev_tools/msys64/mingw64/bin/gdb.exe", // 64位GDB（通常在mingw64/bin下）
+            "setupCommands": [
+                {
+                    "description": "启用GDB整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "设置Intel反汇编风格",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "忽略64位MinGW系统库断点",
+                    "text": "-interpreter-exec console \"skip -gfi ${env:MINGW64_PREFIX}/include/*\"",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "GCC-64 - 构建项目",
+            "logging": {
+                "moduleLoad": false,
+                "trace": false,
+                "traceFile": "${workspaceFolder}/build/gcc-64/gdb.log"
+            }
+        },
+        // 3. MSVC 32位配置
+        {
+            "name": "MSVC-32 - 启动调试",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/msvc-32/bin/vscode-config-template.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "PLATFORM",
+                    "value": "x86"
+                }
+            ],
+            "externalConsole": false,
+            "preLaunchTask": "MSVC-32 - 构建项目",
+            "logging": {
+                "moduleLoad": false,
+                "trace": false
+            }
+        },
+        // 4. MSVC 64位配置
+        {
+            "name": "MSVC-64 - 启动调试",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/msvc-64/bin/vscode-config-template.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "PLATFORM",
+                    "value": "x64"
+                }
+            ],
+            "externalConsole": false,
+            "preLaunchTask": "MSVC-64 - 构建项目",
+            "logging": {
+                "moduleLoad": false,
+                "trace": false
+            }
+        }
+    ]
+}

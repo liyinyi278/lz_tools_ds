@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "sstream": "cpp",
+        "limits": "cpp",
+        "iostream": "cpp",
+        "random": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "system_error": "cpp",
+        "cstdlib": "cpp",
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "typeinfo": "cpp",
+        "algorithm": "cpp"
+    }
+}

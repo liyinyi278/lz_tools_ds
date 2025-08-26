@@ -1,0 +1,261 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        // -------------------------- GCC 32位构建任务 --------------------------
+        {
+            "label": "GCC-32 - 创建build目录",
+            "type": "shell",
+            "command": "if (-not (Test-Path -Path \"${workspaceFolder}/build/gcc-32\")) { New-Item -ItemType Directory -Path \"${workspaceFolder}/build/gcc-32\" -Force }",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "创建GCC-32位构建目录"
+        },
+        {
+            "label": "GCC-32 - cmake配置",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "../..",
+                "-G",
+                "MinGW Makefiles",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_CXX_COMPILER=i686-w64-mingw32-g++", // 32位GCC编译器
+                "-DCMAKE_C_COMPILER=i686-w64-mingw32-gcc" // 32位GCC编译器
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/gcc-32"
+            },
+            "dependsOn": [
+                "GCC-32 - 创建build目录"
+            ],
+            "problemMatcher": [],
+            "detail": "配置GCC-32位CMake项目"
+        },
+        {
+            "label": "GCC-32 - 编译",
+            "type": "shell",
+            "command": "mingw32-make.exe",
+            "args": [
+                "-j4"
+            ], // 4线程并行编译
+            "options": {
+                "cwd": "${workspaceFolder}/build/gcc-32"
+            },
+            "dependsOn": [
+                "GCC-32 - cmake配置"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "编译GCC-32位项目"
+        },
+        {
+            "label": "GCC-32 - 构建项目",
+            "dependsOn": [
+                "GCC-32 - 编译"
+            ],
+            "problemMatcher": [],
+            "detail": "完整构建GCC-32位项目"
+        },
+        // -------------------------- GCC 64位构建任务 --------------------------
+        {
+            "label": "GCC-64 - 创建build目录",
+            "type": "shell",
+            "command": "if (-not (Test-Path -Path \"${workspaceFolder}/build/gcc-64\")) { New-Item -ItemType Directory -Path \"${workspaceFolder}/build/gcc-64\" -Force }",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "创建GCC-64位构建目录"
+        },
+        {
+            "label": "GCC-64 - cmake配置",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "../..",
+                "-G",
+                "MinGW Makefiles",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++", // 64位GCC编译器
+                "-DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc" // 64位GCC编译器
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/gcc-64"
+            },
+            "dependsOn": [
+                "GCC-64 - 创建build目录"
+            ],
+            "problemMatcher": [],
+            "detail": "配置GCC-64位CMake项目"
+        },
+        {
+            "label": "GCC-64 - 编译",
+            "type": "shell",
+            "command": "mingw32-make.exe",
+            "args": [
+                "-j4"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/gcc-64"
+            },
+            "dependsOn": [
+                "GCC-64 - cmake配置"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "编译GCC-64位项目"
+        },
+        {
+            "label": "GCC-64 - 构建项目",
+            "dependsOn": [
+                "GCC-64 - 编译"
+            ],
+            "problemMatcher": [],
+            "detail": "完整构建GCC-64位项目"
+        },
+        // -------------------------- MSVC 32位构建任务 --------------------------
+        {
+            "label": "MSVC-32 - 创建build目录",
+            "type": "shell",
+            "command": "if (-not (Test-Path -Path \"${workspaceFolder}/build/msvc-32\")) { New-Item -ItemType Directory -Path \"${workspaceFolder}/build/msvc-32\" -Force }",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "创建MSVC-32位构建目录"
+        },
+        {
+            "label": "MSVC-32 - cmake配置",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "..",
+                "-G",
+                "Visual Studio 17 2022", // 根据你的VS版本修改（如2019对应16）
+                "-A",
+                "Win32", // 32位架构
+                "-DCMAKE_BUILD_TYPE=Debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/msvc-32"
+            },
+            "dependsOn": [
+                "MSVC-32 - 创建build目录"
+            ],
+            "problemMatcher": [],
+            "detail": "配置MSVC-32位CMake项目"
+        },
+        {
+            "label": "MSVC-32 - 编译",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                ".",
+                "--config",
+                "Debug",
+                "--parallel" // 并行编译
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/msvc-32"
+            },
+            "dependsOn": [
+                "MSVC-32 - cmake配置"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "detail": "编译MSVC-32位项目"
+        },
+        {
+            "label": "MSVC-32 - 构建项目",
+            "dependsOn": [
+                "MSVC-32 - 编译"
+            ],
+            "problemMatcher": [],
+            "detail": "完整构建MSVC-32位项目"
+        },
+        // -------------------------- MSVC 64位构建任务 --------------------------
+        {
+            "label": "MSVC-64 - 创建build目录",
+            "type": "shell",
+            "command": "if (-not (Test-Path -Path \"${workspaceFolder}/build/msvc-64\")) { New-Item -ItemType Directory -Path \"${workspaceFolder}/build/msvc-64\" -Force }",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "detail": "创建MSVC-64位构建目录"
+        },
+        {
+            "label": "MSVC-64 - cmake配置",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "..",
+                "-G",
+                "Visual Studio 17 2022", // 与你的VS版本匹配
+                "-A",
+                "x64", // 64位架构
+                "-DCMAKE_BUILD_TYPE=Debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/msvc-64"
+            },
+            "dependsOn": [
+                "MSVC-64 - 创建build目录"
+            ],
+            "problemMatcher": [],
+            "detail": "配置MSVC-64位CMake项目"
+        },
+        {
+            "label": "MSVC-64 - 编译",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                ".",
+                "--config",
+                "Debug",
+                "--parallel"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/msvc-64"
+            },
+            "dependsOn": [
+                "MSVC-64 - cmake配置"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "detail": "编译MSVC-64位项目"
+        },
+        {
+            "label": "MSVC-64 - 构建项目",
+            "dependsOn": [
+                "MSVC-64 - 编译"
+            ],
+            "problemMatcher": [],
+            "detail": "完整构建MSVC-64位项目"
+        }
+    ]
+}
