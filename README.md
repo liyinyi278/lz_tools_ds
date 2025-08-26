@@ -1,3 +1,5 @@
+#隆回弈智棋院小工具-ds版： lz_tools_ds
+
 配置文件复制后需要修改的地方：
 
 1、CMakeLists.txt文件中：“project”里的“vscode-config-template”需要改为你自己的“项目名”。
